@@ -1,0 +1,11 @@
+# Pickleball court rectifier -- runtime dependencies.
+# Tested with Python 3.12 on Windows 11.
+#
+# opencv-python includes the GUI (highgui) build needed for imshow windows and
+# mouse callbacks.  Do NOT install opencv-python-headless instead: the headless
+# wheel has no window support, so the interactive parts of main.py will fail.
+opencv-python>=4.8,<5
+numpy>=1.24,<3
+
+# Tests use only the Python standard library (unittest), so nothing extra is
+# required to run them.

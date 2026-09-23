@@ -1,0 +1,24 @@
+# virtual environment
+.venv/
+venv/
+
+# generated results -- reproducible by running the code
+output/
+
+# generated demo images and their ground truth.
+# Regenerate everything with:  python generate_demo.py --all
+# (they total ~14 MB, so they are kept out of the repository; the figures in
+# docs/images/ are committed instead, since the README links to them)
+demo/*.png
+demo/*_ground_truth.json
+
+# python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
