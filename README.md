@@ -620,26 +620,41 @@ in, and nothing here is pre-answered.
 
 ---
 
-## 13. Publishing this yourself
+## 13. The repository
 
-Not done for you — no repository has been created and no one has been contacted.
+Published at **https://github.com/Lampusxd/pickleball-court-rectifier** (public).
+
+It was created with the commands below, on request and after the owner
+authorised the GitHub CLI. No one has been contacted about it: sharing the URL
+with an instructor, and submitting the recording and reflection, is still
+yours to do.
 
 ```powershell
-git init
-git add .
+git init -b main
+git add -A
 git commit -m "Pickleball court rectifier: perspective mapping learn-a-skill project"
-gh repo create pickleball-court-rectifier --public --source=. --push
-# or, without the GitHub CLI: create an empty repo on github.com, then
+gh repo create pickleball-court-rectifier --public --source=. --remote=origin --push
+# without the GitHub CLI: create an empty repo on github.com, then
 #   git remote add origin https://github.com/<you>/pickleball-court-rectifier.git
-#   git branch -M main
 #   git push -u origin main
 ```
 
-Before pushing: check that photos of identifiable people are yours to publish,
-and that `output/` and `.venv/` are ignored (a `.gitignore` is included). The
-`demo/` files are reproducible from `generate_demo.py`, so committing them is
-optional. Share the repository URL with your instructor yourself, along with
-your recording and your completed reflection.
+Everyday updates afterwards:
+
+```powershell
+git add -A
+git commit -m "describe what changed"
+git push
+```
+
+What is committed: the source, the tests, this README, the `docs/` figures and
+the licence — 16 files. What is not: `.venv/`, `output/`, and the ~14 MB of
+generated `demo/` images, all of which a fresh clone recreates with
+`pip install -r requirements.txt` and `python generate_demo.py --all`.
+
+Before adding anything else: photographs of identifiable people are yours to
+clear before publishing, and this repository deliberately contains none — every
+court image in it is synthetic.
 
 ---
 
@@ -677,9 +692,14 @@ measurement.
 - running the tool interactively with real mouse clicks;
 - photographing a real court and calibrating it, if I choose to;
 - measuring and reporting accuracy on that photo;
-- the reflection answers, the recorded demonstration, and publishing the
-  repository;
+- the reflection answers and the recorded demonstration;
 - reviewing and verifying the generated code before submitting it.
+
+**Done by the assistant at my direction, with my authorisation:** installing
+Python 3.12 and the GitHub CLI on my machine, initialising the git repository
+and writing the commit message, and creating and pushing the public GitHub
+repository after I completed the GitHub login myself. I chose the repository
+name, its public visibility and the licence.
 
 **Verification I performed myself:** _(fill in — e.g. which files you read line
 by line, which behaviour you tested, anything you changed or corrected, and
