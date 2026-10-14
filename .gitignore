@@ -12,6 +12,9 @@ output/
 demo/*.png
 demo/*_ground_truth.json
 
+# pose model downloaded by track_video.py
+models/*.task
+
 # python
 __pycache__/
 *.py[cod]
