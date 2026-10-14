@@ -3,11 +3,11 @@
 Turn an angled photograph of a pickleball court into a top-down view, and map
 player positions from the photo into real court coordinates in feet.
 
-Everything is manual and explicit: you click the four court corners, the code
+The photo tool is manual and explicit: you click the four court corners, the code
 solves one 3×3 homography with `cv2.getPerspectiveTransform`, and every later
 click is pushed through that matrix with `cv2.perspectiveTransform`. There is
-no detection, no training, and no video — the point is to understand the
-geometry, not to hide it.
+no training. A separate command follows one player's feet through a fixed-camera
+video and draws them on the court diagram — see §6.
 
 ![The three stages: angled image with clicked corners, the rectified top-down warp, and player positions in feet on a court diagram](docs/images/workflow.png)
 
@@ -205,6 +205,8 @@ The same applies to an airborne ball. Always click the point between the feet.
 
 ```
 main.py             CLI, OpenCV windows, mouse and keyboard handling
+track_video.py      one fixed-camera video: heels to a court-diagram animation
+contact.py          picks one ground-contact pixel from the two heels
 perspective.py      all the geometry: homography, coordinates, calibration I/O, drawing
 generate_demo.py    builds the synthetic courts: 5 viewpoints, optional known lens
                     distortion, and exact ground truth for every landmark
@@ -318,3 +320,32 @@ its own inputs. That is the whole reason validation mode exists.
 
 No accuracy figure for a real photograph appears in this repository unless you
 measured it and wrote it in.
+
+---
+
+## 6. One-person video
+
+`track_video.py` uses the same homography as the photo tool. It draws the
+player on the court diagram. The video frames themselves are not warped.
+
+The camera must stay still, and one person should be the only body in frame.
+On the first frame, click the four corners in the same order as §2, then press
+`3`. MediaPipe Pose Landmarker (lite) finds the heels in each later frame. The
+contact point is the midpoint when both heels are visible, or the one visible
+heel. That pixel is mapped to court feet and drawn as a red dot with a short
+trail.
+
+```bash
+python track_video.py drill.mp4
+python track_video.py drill.mov --load output/video_calibration.json
+```
+
+The lite pose model downloads on first run. While the corners are being chosen,
+`u` undoes, `r` resets, and `q` quits. After the diagram finishes, `r` replays
+the animation and `q` quits.
+
+| file | contents |
+| --- | --- |
+| `output/court_path.mp4` | the diagram with the moving dot |
+| `output/positions.csv` | frame, time, and court feet; blank when no heel is visible |
+| `output/video_calibration.json` | the four corners, so `--load` can skip the click |
